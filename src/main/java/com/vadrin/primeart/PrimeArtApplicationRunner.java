@@ -44,9 +44,9 @@ public class PrimeArtApplicationRunner implements ApplicationRunner {
 		System.out.println("Begin processing the image");
 		readInputFile();
 		final String inputExcludingLast = input.substring(0, input.length() - 7);
-		int incremental = 100675;
+		int incremental = 100000;
 		driver.get(alpertronUrl);
-		while (incremental < 100685) {
+		while (incremental < 999999) {
 			String thisInput = inputExcludingLast + Integer.toString(incremental) + "1";
 			String result = primalityTester.test(thisInput);
 			logger.info(result + " :" + thisInput);
@@ -71,7 +71,6 @@ public class PrimeArtApplicationRunner implements ApplicationRunner {
 	}
 
 	private String[] formatOutput(String output) {
-		output = output+"X";
 		String[] toReturn = new String[rows];
 		for (int i = 0; i < toReturn.length; i++) {
 			toReturn[i] = output.substring(i*(cols), (i*(cols)) + cols);
