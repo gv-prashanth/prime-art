@@ -10,6 +10,8 @@
 .springBeans
 .sts4-cache
 logs
+input
+output
 
 ### IntelliJ IDEA ###
 .idea
