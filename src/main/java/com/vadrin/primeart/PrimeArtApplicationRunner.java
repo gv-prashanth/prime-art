@@ -33,6 +33,9 @@ public class PrimeArtApplicationRunner implements ApplicationRunner {
 	@Value("${prime-art.output.folder}")
 	private String outputFolder;
 
+	@Value("${prime-art.incremental.start.location}")
+	private int incrementalStartLoc;
+			
 	private static final Logger logger = LoggerFactory.getLogger(PrimeArtApplicationRunner.class);
 
 	String input = "";
@@ -43,11 +46,12 @@ public class PrimeArtApplicationRunner implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws IOException {
 		System.out.println("Begin processing the image");
 		readInputFile();
-		final String inputExcludingLast = input.substring(0, input.length() - 7);
+		final String prePart = input.substring(0, incrementalStartLoc);//1435
+		final String postPart = input.substring(incrementalStartLoc+6, input.length());//551
 		int incremental = 100000;
 		driver.get(alpertronUrl);
 		while (incremental < 999999) {
-			String thisInput = inputExcludingLast + Integer.toString(incremental) + "1";
+			String thisInput = prePart + Integer.toString(incremental) + postPart;
 			String result = primalityTester.test(thisInput);
 			logger.info(result + " :" + thisInput);
 			if (result.equalsIgnoreCase("PRIME")) {
