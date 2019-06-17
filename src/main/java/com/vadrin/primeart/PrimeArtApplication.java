@@ -10,17 +10,17 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class PrimeArtApplication {
 
-	@Value("${prime-art.drivers.chrome}")
-	private String chromeDriverLocation;
+//	@Value("${prime-art.drivers.chrome}")
+//	private String chromeDriverLocation;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrimeArtApplication.class, args);
 	}
 
-	@Bean
-	public WebDriver getChromeDriver() {
-		System.setProperty("webdriver.chrome.driver", chromeDriverLocation);
-		return new ChromeDriver();
-	}
+//	@Bean
+//	public WebDriver getChromeDriver() {
+//		System.setProperty("webdriver.chrome.driver", chromeDriverLocation);
+//		return new ChromeDriver();
+//	}
 
 }

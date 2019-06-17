@@ -1,4 +1,9 @@
-package com.vadrin.primeart;
+package com.vadrin.primeart.services;
+
+import java.math.BigInteger;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -9,10 +14,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
-@Component
-public class PrimalityTester {
+//@Service
+public class AlpertronPrimalityServiceImpl implements PrimalityService {
 
 	@Autowired
 	private WebDriver driver;
@@ -21,7 +26,21 @@ public class PrimalityTester {
 	private static final String COMPOSITE = "COMPOSITE";
 	private static final String UNDETERMINED = "UNDETERMINED";
 
-	public String test(String input) {
+	@Value("${prime-art.alpertron.url}")
+	private String alpertronUrl;
+
+	@PostConstruct
+	public void loadDriver() {
+		driver.get(alpertronUrl);
+	}
+
+	@PreDestroy
+	public void destroyDriver() {
+		driver.close();
+		driver.quit();
+	}
+
+	public boolean isPrime(String input) {
 
 		try {
 			WebElement stop = driver.findElement(By.xpath("//*[@id=\"stop\"]"));
@@ -42,7 +61,8 @@ public class PrimalityTester {
 			WebElement compositeResult = (new WebDriverWait(driver, 10)).until(
 					ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"result\"]/p[@class=\"blue\"]")));
 			if (compositeResult.getText().toLowerCase().contains("digits) =")) {
-				return COMPOSITE;
+				//return COMPOSITE;
+				return false;
 			}
 		} catch (TimeoutException ex) {
 
@@ -52,14 +72,26 @@ public class PrimalityTester {
 			WebElement primeResult = (new WebDriverWait(driver, 20))
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"result\"]/ul/li")));
 			if (primeResult.getText().toLowerCase().contains("prime")) {
-				return PRIME;
+				//return PRIME;
+				return true;
 			} else {
-				return COMPOSITE;
+				//return COMPOSITE;
+				return false;
 			}
 		} catch (TimeoutException ex) {
-			return UNDETERMINED;
+			//return UNDETERMINED;
+			return false;
 		}
 
+	}
+
+	@Override
+	public String nextPrime(String input) {
+		BigInteger b = new BigInteger(input);
+		while(!isPrime(b.toString())){
+			b.add(new BigInteger("1"));
+		}
+		return b.toString();
 	}
 
 }
