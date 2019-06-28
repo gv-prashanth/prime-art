@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vadrin.primeart.models.Art;
 import com.vadrin.primeart.services.ImageFormattingService;
-import com.vadrin.primeart.services.PrimalityService;
+import com.vadrin.primeart.services.RandomizingService;
+import com.vadrin.primeart.services.prime.PrimalityService;
 
 @RestController
 public class PrimeArtController {
@@ -22,14 +23,18 @@ public class PrimeArtController {
 
 	@Autowired
 	ImageFormattingService imageFormattingService;
+	
+	@Autowired
+	RandomizingService randomizingService;
 
 	private static final Logger logger = LoggerFactory.getLogger(PrimeArtController.class);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/image/png")
+	@RequestMapping(method = RequestMethod.POST, value = "/image/base64png")
 	public Art aggregate(@RequestBody String pngImage) throws IOException {
 		double[][] pixels = imageFormattingService.convertPngtoBitmap(pngImage);
 		String[] asciiStrings = imageFormattingService.constructAsciiString(pixels);
-		return run(new Art(asciiStrings));
+		String[] randomizedAsciiStrings = randomizingService.randomizeALittle(asciiStrings);
+		return run(new Art(randomizedAsciiStrings));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/image")

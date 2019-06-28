@@ -57,9 +57,9 @@ public class ImageFormattingService {
 				if (pixelVal == 0)
 					sb.append("1");
 //				else if (pixelVal < 256 / 3)
-//					sb.append(".");
+//					sb.append("7");
 //				else if (pixelVal < 2 * (256 / 3))
-//					sb.append("x");
+//					sb.append("3");
 				else
 					sb.append("8");
 			}

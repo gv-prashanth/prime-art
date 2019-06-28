@@ -1,4 +1,4 @@
-package com.vadrin.primeart.services;
+package com.vadrin.primeart.services.prime;
 
 import java.math.BigInteger;
 

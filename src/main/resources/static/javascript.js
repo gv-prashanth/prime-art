@@ -84,7 +84,7 @@ function prepareSimpleCanvas()
 		console.log(dataURL);
 		document.getElementById('textOutput').innerHTML = "Processing, Please Wait...";
 		var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
-		xmlhttp.open("POST", "/image/png");
+		xmlhttp.open("POST", "/image/base64png");
 		xmlhttp.setRequestHeader("Content-Type", "text/plain");
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
