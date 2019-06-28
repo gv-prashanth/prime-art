@@ -2,24 +2,23 @@ package com.vadrin.primeart.services;
 
 import java.math.BigInteger;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class AlpertronPrimalityServiceImpl implements PrimalityService {
 
-	@Autowired
 	private WebDriver driver;
 
 	private static final String PRIME = "PRIME";
@@ -28,20 +27,22 @@ public class AlpertronPrimalityServiceImpl implements PrimalityService {
 
 	@Value("${prime-art.alpertron.url}")
 	private String alpertronUrl;
+	
+	@Value("${prime-art.drivers.chrome}")
+	private String chromeDriverLocation;
 
-	@PostConstruct
 	public void loadDriver() {
+		System.setProperty("webdriver.chrome.driver", chromeDriverLocation);
+		driver = new ChromeDriver();
 		driver.get(alpertronUrl);
 	}
 
-	@PreDestroy
 	public void destroyDriver() {
 		driver.close();
 		driver.quit();
 	}
-
-	public boolean isPrime(String input) {
-
+	
+	private boolean isPrime(String input) {
 		try {
 			WebElement stop = driver.findElement(By.xpath("//*[@id=\"stop\"]"));
 			stop.click();
@@ -66,6 +67,8 @@ public class AlpertronPrimalityServiceImpl implements PrimalityService {
 			}
 		} catch (TimeoutException ex) {
 
+		} catch (StaleElementReferenceException ex) {
+
 		}
 
 		try {
@@ -82,15 +85,16 @@ public class AlpertronPrimalityServiceImpl implements PrimalityService {
 			//return UNDETERMINED;
 			return false;
 		}
-
 	}
 
 	@Override
 	public String nextPrime(String input) {
+		loadDriver();
 		BigInteger b = new BigInteger(input);
 		while(!isPrime(b.toString())){
-			b.add(new BigInteger("1"));
+			b = b.add(new BigInteger("1"));
 		}
+		destroyDriver();
 		return b.toString();
 	}
 

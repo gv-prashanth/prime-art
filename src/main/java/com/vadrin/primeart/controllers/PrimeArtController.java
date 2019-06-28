@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +22,6 @@ public class PrimeArtController {
 
 	@Autowired
 	ImageFormattingService imageFormattingService;
-	
-	@Value("${prime-art.output.folder}")
-	private String outputFolder;
 
 	private static final Logger logger = LoggerFactory.getLogger(PrimeArtController.class);
 
@@ -39,14 +35,9 @@ public class PrimeArtController {
 	@RequestMapping(method = RequestMethod.POST, value = "/image")
 	public Art run(@RequestBody Art input) throws IOException {
 		System.out.println("Begin processing the image");
-		if (primalityService.isPrime(input.toString())) {
-			logger.info(input + " :PRIME");
-			return input;
-		} else {
-			String nextPrimeNumber = primalityService.nextPrime(input.toString());
-			logger.info(nextPrimeNumber + " :PRIME");
-			return new Art(nextPrimeNumber, input.getRows()[0].length());
-		}
+		String nextPrimeNumber = primalityService.nextPrime(input.toString());
+		logger.info(nextPrimeNumber + " :PRIME");
+		return new Art(nextPrimeNumber, input.getRows()[0].length());
 	}
 
 }
