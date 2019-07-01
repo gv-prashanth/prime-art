@@ -60,30 +60,30 @@ public class ImageFormattingService {
 		graphics.dispose();
 		return resizedImage;
 	}
-	
+
 	public String[] constructAsciiStringFromGreyJpegImage(BufferedImage greyJpegImage) {
 		StringBuffer sb = new StringBuffer();
 		// get image width and height
 		int width = greyJpegImage.getWidth();
 		int height = greyJpegImage.getHeight();
-		
+
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				int p = greyJpegImage.getRGB(x, y);
-				
+
 				int a = (p >> 24) & 0xff;
 				int r = (p >> 16) & 0xff;
 				int g = (p >> 8) & 0xff;
 				int b = p & 0xff;
-				
+
 				int avg = (r + g + b) / 3;
-				//0 is black & 255 is white
+				// 0 is black & 255 is white
 				if (avg == 0)
+					sb.append("9");
+				else if (avg < 256 / 3)
 					sb.append("8");
-				 else if (avg < 256 / 3)
-				 sb.append("3");
-				 else if (avg < 2 * (256 / 3))
-				 sb.append("7");
+				else if (avg < 2 * (256 / 3))
+					sb.append("3");
 				else
 					sb.append("1");
 			}
@@ -91,5 +91,5 @@ public class ImageFormattingService {
 		}
 		return sb.toString().split("\n");
 	}
-	
+
 }

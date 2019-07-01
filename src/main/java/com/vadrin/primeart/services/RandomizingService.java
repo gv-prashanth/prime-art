@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RandomizingService {
-	
+
 	@Value("${prime-art.random.replacementchancepercentage:10}")
 	private int replacementChancePercentage;
-	
+
 	public String[] randomizeALittle(String[] asciiStrings) {
 		for (int i = 0; i < asciiStrings.length; i++) {
 			char[] lineElements = asciiStrings[i].toCharArray();

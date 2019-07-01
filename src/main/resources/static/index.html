@@ -2,20 +2,91 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Image Recognition</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Prime Art</title>
+<style>
+.center {
+	position: relative;
+}
+
+.center div {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.filebtn {
+	/*border: thick solid grey;*/
+	color: gray;
+	background-color: white;
+	padding: 8px 20px;
+	border-radius: 8px;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.ortext {
+	/*border: thick solid grey;*/
+	color: gray;
+	padding: 8px 20px;
+	border-radius: 8px;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px;
+	text-align: center;
+}
+
+.textOutput {
+	font-family: Calibri;
+	letter-spacing: 2px;
+	line-height: 13px;
+	flex: 47%;
+	border: thick solid grey;
+	border-radius: 8px;
+	margin: 10px;
+	padding: 10px;
+	background: #F0F0F0;
+}
+</style>
 </head>
 <body>
 	<h1>Prime Art</h1>
+
 	<div id="info">
-		<b>This project is inspired by <a href="https://www.youtube.com/watch?v=fQQ8IiTWHhg">Trinity Hall Prime</a>. Simply write / paint anything in the canvas below to get a Prime Number version of it!</b>
+		<b> This project is inspired by <a
+			href="https://www.youtube.com/watch?v=fQQ8IiTWHhg">Trinity Hall
+				Prime</a>. Simply write / upload anything in the canvas below to get a
+			Prime Number version of it!
+		</b>
 	</div>
 	<br>
-	<div class="image">
-		<div id="canvasSimpleDiv"></div>
+	<div style="display: flex;">
+		<div class="image" id="image"
+			style="flex: 47%; margin: 10px; border-radius: 8px;">
+			<div id="canvasSimpleDiv"
+				style="border: thick solid grey; border-radius: 8px;"></div>
+			<div class="ortext">---Write Above (or) Upload below---</div>
+			<div style="border: thick solid grey; border-radius: 8px;">
+				<input type='file' id='imgfile' class="filebtn"
+					onchange='loadImage();' />
+			</div>
+		</div>
+		<div style="flex: 6%;" class="center">
+			<div>
+				<button id="identify" type="button" style="height: 75px;">Prime
+					Art &#187;</button>
+				<br /> <br />
+				<button id="clearCanvasSimple" type="button" style="height: 75px;">Retry
+					&#8635;</button>
+			</div>
+		</div>
+		<div id="textOutput" class="textOutput"></div>
 	</div>
-	<p class="demoToolList"><button id="clearCanvasSimple" type="button">Clear</button>&nbsp;<button id="identify" type="button">Make Art!</button></p>
-	<div id="textOutput" style="font-family: Calibri; letter-spacing: 2px; line-height: 13px;"></div>
 </body>
 <script src="javascript.js"></script>
 </html>
