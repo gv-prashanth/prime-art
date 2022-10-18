@@ -1,5 +1,5 @@
 package com.vadrin.primeart.services.prime;
-
+/*
 import java.math.BigInteger;
 
 import org.openqa.selenium.By;
@@ -99,3 +99,4 @@ public class AlpertronPrimalityServiceImpl implements PrimalityService {
 	}
 
 }
+*/
