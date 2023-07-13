@@ -98,7 +98,7 @@
 		<dependency>
 		    <groupId>com.squareup.okio</groupId>
 		    <artifactId>okio</artifactId>
-		    <version>1.14.0</version>
+		    <version>3.4.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.codeborne/phantomjsdriver -->
 		<dependency>
